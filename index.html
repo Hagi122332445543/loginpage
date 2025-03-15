@@ -60,12 +60,12 @@
 </head>
 <body>
   <div class="login-container">
-    <h2>Login</h2>
+    <h2>Giriş Yap</h2>
     <form id="login-form">
-      <label for="username">Username</label>
+      <label for="username">Kullanıcı Adı</label>
       <input type="text" id="username" placeholder="Kullanıcı Adı" required>
       
-      <label for="password">Password</label>
+      <label for="password">Şifre</label>
       <input type="password" id="password" placeholder="Şifre" required>
       
       <button type="submit">Login</button>
@@ -89,7 +89,7 @@
 
       if (users[username] && users[username] === password) {
         errorMessage.textContent = "";
-        alert("Login Successful!");
+        alert("Giriş Başarılı!");
         window.location.href = "dashboard.html"; // Change to your actual dashboard page
       } else {
         errorMessage.textContent = "Invalid Username or Password!";
