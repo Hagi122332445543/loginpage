@@ -60,15 +60,20 @@
 </head>
 <body>
   <div class="login-container">
-    <h2>Giriş Yap</h2>
+    <h2 id="form-title">Giriş Yap</h2>
     <form id="login-form">
-      <label for="username">Kullanıcı Adı</label>
-      <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
-      
-      <label for="password">Şifre</label>
-      <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
-      
-      <button type="submit">Giriş Yap</button>
+      <div id="login-fields">
+        <label for="username">Kullanıcı Adı</label>
+        <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
+        
+        <label for="password">Şifre</label>
+        <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
+      </div>
+      <div id="verification-fields" style="display: none;">
+        <label for="verification-code">Doğrulama Kodu</label>
+        <input type="text" id="verification-code" placeholder="E-postanıza gönderilen 6 haneli kodu giriniz" required>
+      </div>
+      <button type="submit" id="submit-button">Giriş Yap</button>
       <p class="error" id="error-message"></p>
     </form>
   </div>
@@ -80,19 +85,62 @@
       "tek_admins-2": "adminfront19051123TEK1905"
     };
 
-    document.getElementById("login-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent default form submission
-      
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+    let generatedCode = null;
+    let currentStep = 'login'; // 'login' or 'verify'
+
+    document.getElementById("login-form").addEventListener("submit", async function(event) {
+      event.preventDefault();
       const errorMessage = document.getElementById("error-message");
 
-      if (users[username] && users[username] === password) {
-        errorMessage.textContent = "";
-        alert("Giriş Başarılı!");
-        window.location.href = "dashboard.html"; // Change to your actual dashboard page
-      } else {
-        errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
+      if (currentStep === 'login') {
+        // Validate username and password
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        
+        if (users[username] && users[username] === password) {
+          errorMessage.textContent = "";
+
+          // Call the API to send the verification code via email
+          try {
+            const response = await fetch('/api/sendVerificationCode', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: username })
+            });
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            if (data.success) {
+              // Store the verification code returned by the API
+              generatedCode = data.verificationCode;
+              
+              // Switch to verification step: hide login fields and show verification field
+              document.getElementById("login-fields").style.display = "none";
+              document.getElementById("verification-fields").style.display = "block";
+              document.getElementById("form-title").textContent = "Doğrulama Kodu Giriniz";
+              document.getElementById("submit-button").textContent = "Doğrula";
+              currentStep = 'verify';
+            } else {
+              errorMessage.textContent = "Doğrulama kodu gönderilemedi!";
+            }
+          } catch(error) {
+            errorMessage.textContent = "Doğrulama kodu gönderilirken hata oluştu!";
+            console.error("Error:", error);
+          }
+        } else {
+          errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
+        }
+      } else if (currentStep === 'verify') {
+        // Verify the 6-digit code
+        const enteredCode = document.getElementById("verification-code").value;
+        if (enteredCode === generatedCode) {
+          errorMessage.textContent = "";
+          alert("Giriş Başarılı!");
+          window.location.href = "dashboard.html"; // Redirect to the dashboard
+        } else {
+          errorMessage.textContent = "Yanlış doğrulama kodu! Lütfen tekrar deneyin.";
+        }
       }
     });
   </script>
