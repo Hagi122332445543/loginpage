@@ -60,94 +60,39 @@
 </head>
 <body>
   <div class="login-container">
-    <h2 id="form-title">Giriş Yap</h2>
+    <h2>Giriş Yap</h2>
     <form id="login-form">
-      <div id="login-fields">
-        <label for="username">Kullanıcı Adı</label>
-        <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
-        
-        <label for="password">Şifre</label>
-        <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
-      </div>
-      <div id="verification-fields" style="display: none;">
-        <label for="verification-code">Doğrulama Kodu</label>
-        <input type="text" id="verification-code" placeholder="E-postanıza gönderilen 6 haneli kodu giriniz" required>
-      </div>
-      <button type="submit" id="submit-button">Giriş Yap</button>
+      <label for="username">Kullanıcı Adı</label>
+      <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
+      
+      <label for="password">Şifre</label>
+      <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
+      
+      <button type="submit">Giriş Yap</button>
       <p class="error" id="error-message"></p>
     </form>
   </div>
 
   <script>
-    // Sample users with their corresponding passwords
     const users = {
       "tek_admins-1": "AdministratorforcementTEK1905_1",
       "tekweb_holders13": "HoldersTEK1905_13adminfront1905",
       "tek_admins-2": "adminfront19051123TEK1905"
     };
 
-    let generatedCode = null;
-    let currentStep = 'login'; // 'login' or 'verify'
-
-    // Simulated API function to "send" the verification code
-    function simulateSendVerificationCode(username) {
-      return new Promise((resolve) => {
-        // Generate a random 6-digit code
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
-        // Simulate network delay (1 second)
-        setTimeout(() => {
-          resolve({ success: true, verificationCode: code });
-        }, 1000);
-      });
-    }
-
-    document.getElementById("login-form").addEventListener("submit", async function(event) {
-      event.preventDefault();
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+      
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
       const errorMessage = document.getElementById("error-message");
 
-      if (currentStep === 'login') {
-        // Validate username and password
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        
-        if (users[username] && users[username] === password) {
-          errorMessage.textContent = "";
-
-          // Simulate sending the verification code via email
-          try {
-            const data = await simulateSendVerificationCode(username);
-            if (data.success) {
-              // Store the verification code returned by the simulated API
-              generatedCode = data.verificationCode;
-              console.log("Verification Code (for testing):", generatedCode);
-              
-              // Switch to verification step: hide login fields and show verification field
-              document.getElementById("login-fields").style.display = "none";
-              document.getElementById("verification-fields").style.display = "block";
-              document.getElementById("form-title").textContent = "Doğrulama Kodu Giriniz";
-              document.getElementById("submit-button").textContent = "Doğrula";
-              currentStep = 'verify';
-            } else {
-              errorMessage.textContent = "Doğrulama kodu gönderilemedi!";
-            }
-          } catch(error) {
-            errorMessage.textContent = "Doğrulama kodu gönderilirken hata oluştu!";
-            console.error("Error:", error);
-          }
-        } else {
-          errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
-        }
-      } else if (currentStep === 'verify') {
-        // Verify the 6-digit code
-        const enteredCode = document.getElementById("verification-code").value;
-        if (enteredCode === generatedCode) {
-          errorMessage.textContent = "";
-          alert("Giriş Başarılı!");
-          // Redirect to the dashboard page (you can adjust the URL as needed)
-          window.location.href = "dashboard.html";
-        } else {
-          errorMessage.textContent = "Yanlış doğrulama kodu! Lütfen tekrar deneyin.";
-        }
+      if (users[username] && users[username] === password) {
+        errorMessage.textContent = "";
+        alert("Giriş Başarılı!");
+        window.location.href = "dashboard.html"; // Change to your actual dashboard page
+      } else {
+        errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
       }
     });
   </script>
