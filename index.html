@@ -63,21 +63,21 @@
     <h2>Giriş Yap</h2>
     <form id="login-form">
       <label for="username">Kullanıcı Adı</label>
-      <input type="text" id="username" placeholder="Kullanıcı Adı" required>
+      <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
       
       <label for="password">Şifre</label>
-      <input type="password" id="password" placeholder="Şifre" required>
+      <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
       
-      <button type="submit">Login</button>
+      <button type="submit">Giriş Yap</button>
       <p class="error" id="error-message"></p>
     </form>
   </div>
 
   <script>
     const users = {
-      "admin": "12345",
-      "user1": "password",
-      "guest": "guest123"
+      "tek_admins-1": "AdministratorforcementTEK1905_1",
+      "tekweb_holders13": "HoldersTEK1905_13adminfront1905",
+      "tek_admins-2": "adminfront19051123TEK1905"
     };
 
     document.getElementById("login-form").addEventListener("submit", function(event) {
@@ -92,7 +92,7 @@
         alert("Giriş Başarılı!");
         window.location.href = "dashboard.html"; // Change to your actual dashboard page
       } else {
-        errorMessage.textContent = "Invalid Username or Password!";
+        errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
       }
     });
   </script>
