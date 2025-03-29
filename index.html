@@ -1,100 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #121212;
-      margin: 0;
-    }
-    .login-container {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-      text-align: center;
-      color: white;
-      width: 300px;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      text-align: left;
-    }
-    input {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <h2>Giriş Yap</h2>
-    <form id="login-form">
-      <label for="username">Kullanıcı Adı</label>
-      <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
-      
-      <label for="password">Şifre</label>
-      <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
-      
-      <button type="submit">Giriş Yap</button>
-      <p class="error" id="error-message"></p>
-    </form>
-  </div>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121212;
+  margin: 0;
+}
 
-  <script>
-    const users = {
-      "tek_admins-1": "AdministratorforcementTEK1905_1",
-      "tekweb_holders13": "HoldersTEK1905_13adminfront1905",
-      "tek_admins-2": "adminfront19051123TEK1905"
-    };
+.login-container {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: white;
+  width: 300px;
+}
 
-    document.getElementById("login-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent default form submission
-      
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const errorMessage = document.getElementById("error-message");
+label {
+  display: block;
+  margin: 10px 0 5px;
+  text-align: left;
+}
 
-      if (users[username] && users[username] === password) {
-        errorMessage.textContent = "";
-        alert("Giriş Başarılı!");
-        window.location.href = "https://sites.google.com/view/tekonly/ana-sayfa"; // Change to your actual dashboard page
-      } else {
-        errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
-      }
-    });
-  </script>
-</body>
-</html>
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
