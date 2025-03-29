@@ -1,114 +1,100 @@
-/* General Page Styling */
-body {
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  margin: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #121212;
+      margin: 0;
+    }
+    .login-container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      text-align: center;
+      color: white;
+      width: 300px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: left;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Giriş Yap</h2>
+    <form id="login-form">
+      <label for="username">Kullanıcı Adı</label>
+      <input type="text" id="username" placeholder="Kullanıcı Adını Giriniz" required>
+      
+      <label for="password">Şifre</label>
+      <input type="password" id="password" placeholder="Şifrenizi Giriniz" required>
+      
+      <button type="submit">Giriş Yap</button>
+      <p class="error" id="error-message"></p>
+    </form>
+  </div>
 
-/* Login Container */
-.login-container {
-  background: rgba(255, 255, 255, 0.12);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  color: white;
-  width: 350px;
-  backdrop-filter: blur(12px);
-}
+  <script>
+    const users = {
+      "tek_admins-1": "AdministratorforcementTEK1905_1",
+      "tekweb_holders13": "HoldersTEK1905_13adminfront1905",
+      "tek_admins-2": "adminfront19051123TEK1905"
+    };
 
-/* Header */
-.login-container h2 {
-  margin-bottom: 20px;
-  font-size: 26px;
-  font-weight: 600;
-}
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+      
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
 
-/* Form Labels */
-label {
-  display: block;
-  margin: 12px 0 6px;
-  text-align: left;
-  font-size: 15px;
-  font-weight: bold;
-  color: #ddd;
-}
-
-/* Input Fields */
-input {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  outline: none;
-  transition: 0.3s;
-}
-
-input::placeholder {
-  color: #ccc;
-  opacity: 0.8;
-}
-
-input:focus {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
-/* Button */
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: 0.3s ease-in-out;
-}
-
-button:hover {
-  background: #0056b3;
-  transform: scale(1.06);
-  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-}
-
-button:active {
-  transform: scale(1);
-}
-
-/* Error Message */
-.error {
-  color: red;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-/* Mobile Responsive */
-@media (max-width: 450px) {
-  .login-container {
-    width: 90%;
-    padding: 25px;
-  }
-
-  input, button {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .login-container h2 {
-    font-size: 22px;
-  }
-}
+      if (users[username] && users[username] === password) {
+        errorMessage.textContent = "";
+        alert("Giriş Başarılı!");
+        window.location.href = "https://sites.google.com/view/tekonly/ana-sayfa"; // Change to your actual dashboard page
+      } else {
+        errorMessage.textContent = "Geçersiz Kullanıcı Adı veya Şifre!";
+      }
+    });
+  </script>
+</body>
+</html>
